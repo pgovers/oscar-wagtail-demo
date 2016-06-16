@@ -1,6 +1,8 @@
 # Django settings for wagtaildemo project.
 
 import os
+from oscar.defaults import *  # noqa
+from oscar import get_core_apps
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 BASE_DIR = PROJECT_ROOT
@@ -113,8 +115,9 @@ ROOT_URLCONF = 'wagtaildemo.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wagtaildemo.wsgi.application'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     # 'django.contrib.sites',  # Wagtail uses its own site management logic
@@ -128,7 +131,6 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -143,7 +145,15 @@ INSTALLED_APPS = (
     'wagtail.contrib.wagtailapi',
 
     'demo',
-)
+] + get_core_apps()
+
+OSCAR_IMAGE_FOLDER = os.path.join(BASE_DIR, 'demo', 'static', 'demo', 'images')
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+}
 
 # Add wagtail.contrib.wagtailsearchpromotions to INSTALLED_APPS
 # if we're on Wagtail 1.1 or later.

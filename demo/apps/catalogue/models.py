@@ -6,8 +6,8 @@ from wagtail.wagtailcore.models import Page
 
 class Category(Page):
     """
-    user oscars category as a wagtail Page.
-    this works becuase they both use treebeard
+    The Oscars Category as a Wagtail Page
+    This works because they both use Treebeard
     """
     name = models.CharField(
         verbose_name=_('name'),

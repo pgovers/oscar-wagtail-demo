@@ -8,12 +8,11 @@ to be able to create some editorial content.
 
 This demo shows you:
 
-    - How to add Oscar to an existing Wagtail site
-    - CRUD Oscar Categories in Wagtail
-    - Disable editing Categories in Oscar
-    - Product block stream field
-    - Category block stream field
-
+  - How to add Oscar to an existing Wagtail site
+  - CRUD Oscar Categories in Wagtail
+  - Disable editing Categories in Oscar
+  - Product block stream field
+  - Category block stream field
 
 
 # Prerequisites
@@ -28,6 +27,11 @@ To keep it simple we show you here the minimal steps required to get up and runn
 Add Oscar to your `requirements.txt`. We use the latest Oscar 1.2.x
 
     oscar>=1.2,<1.3
+
+
+Install the requirements
+
+    $ pip install -r requirements.txt
 
 
 Add Oscar to your settings, in base.py import Oscar:
@@ -67,6 +71,41 @@ for additional settings:
     http://django-oscar.readthedocs.io/en/latest/internals/getting_started.html
 
 
+# Oscar categories in Wagtail
+
+The Oscar Category and Wagtail Page look alike. We fork of the Oscar catalogue app into our project with:
+
+    $ python manage.py oscar_fork_app catalogue demo/apps/
+
+
+Now we create the Category Page model. In `demo/apps/catalogue/models.py` add:
+
+    from django.db import models
+    from django.utils.translation import ugettext_lazy as _
+
+    from wagtail.wagtailcore.models import Page
+
+
+    class Category(Page):
+        """
+        The Oscars Category as a Wagtail Page.
+        This works because they both use Treebeard
+        """
+        name = models.CharField(
+            verbose_name=_('name'),
+            max_length=255,
+            help_text=_("Category name")
+        )
+
+    from oscar.apps.catalogue.models import *  # noqa
+
+
+Run `makemigrations` and `migrate` to let your database reflect the changes:
+
+    $ python manage.py makemigrations
+    $ python manage.py migrate
+
+
 # Admin routes
 
 Add routes in `urls.py`:
@@ -78,9 +117,6 @@ Add routes in `urls.py`:
         url(r'', include(application.urls)),
         ...
     ]
-
-
-# Categories in Wagtail
 
 
 # Disable editing categories in Oscar admin

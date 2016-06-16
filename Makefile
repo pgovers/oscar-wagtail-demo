@@ -1,10 +1,11 @@
 # These targets are not files
-.PHONY: install migrate fixtures createsuperuser clean develop
+.PHONY: install migrations fixtures createsuperuser clean develop
 
 install:
+	cd wagtaildemo
 	pip install -e . -r requirements.txt
 
-migrate:
+migrations:
 	# Migrate database
 	./manage.py migrate
 
@@ -29,4 +30,4 @@ clean:
 	# Delete compiled Python files
 	find . -type f -name "*.pyc" -delete
 
-develop: clean install migrate fixtures createsuperuser
+develop: clean install migrations fixtures createsuperuser

@@ -1,4 +1,4 @@
-# Django settings for wagtaildemo project.
+# Django settings for oscar-wagtail-demo project
 
 import os
 from oscar.defaults import *  # noqa
@@ -87,7 +87,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
 )
 
@@ -163,7 +163,9 @@ HAYSTACK_CONNECTIONS = {
 # full generality (double-digit versions, alpha/beta releases)
 from wagtail.wagtailcore import __version__
 if __version__.split('.') > ['1', '0']:
-    INSTALLED_APPS = list(INSTALLED_APPS) + ['wagtail.contrib.wagtailsearchpromotions']
+    INSTALLED_APPS = list(INSTALLED_APPS) + [
+        'wagtail.contrib.wagtailsearchpromotions'
+    ]
 
 
 EMAIL_SUBJECT_PREFIX = '[wagtaildemo] '
@@ -225,4 +227,4 @@ LOGGING = {
 
 # WAGTAIL SETTINGS
 
-WAGTAIL_SITE_NAME = 'wagtaildemo'
+WAGTAIL_SITE_NAME = 'oscar-wagtail-demo'

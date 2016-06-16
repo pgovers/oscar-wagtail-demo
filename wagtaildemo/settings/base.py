@@ -155,7 +155,8 @@ INSTALLED_APPS = [
 
     'demo',
 ] + get_core_apps([
-    'demo.apps.catalogue'
+    'demo.apps.catalogue',
+    'demo.apps.dashboard.catalogue',
 ])
 
 OSCAR_IMAGE_FOLDER = os.path.join(BASE_DIR, 'demo', 'static', 'demo', 'images')

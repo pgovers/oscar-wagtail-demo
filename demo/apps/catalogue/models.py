@@ -21,9 +21,12 @@ class Category(Page):
     )
 
     content_panels = Page.content_panels + [
-        FieldPanel('name', classname='full'),
         FieldPanel('description', classname='full'),
         ImageChooserPanel('image')
     ]
+
+    def save(self, *args, **kwargs):
+        self.name = self.title
+        super(Category, self).save(*args, **kwargs)
 
 from oscar.apps.catalogue.models import *  # noqa

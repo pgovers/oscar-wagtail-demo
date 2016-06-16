@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             name='image',
             field=models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='wagtailimages.Image', null=True),
         ),
-        migrations.AlterField(
+        migrations.AddField(
             model_name='category',
             name='name',
             field=models.CharField(max_length=255, verbose_name='Name', db_index=True),

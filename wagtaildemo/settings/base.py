@@ -145,7 +145,9 @@ INSTALLED_APPS = [
     'wagtail.contrib.wagtailapi',
 
     'demo',
-] + get_core_apps()
+] + get_core_apps([
+    'demo.apps.catalogue'
+])
 
 OSCAR_IMAGE_FOLDER = os.path.join(BASE_DIR, 'demo', 'static', 'demo', 'images')
 

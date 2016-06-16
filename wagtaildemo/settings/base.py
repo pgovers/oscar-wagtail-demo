@@ -1,8 +1,8 @@
-# Django settings for wagtaildemo project.
+# Django settings for oscar-wagtail-demo project
 
 import os
 from oscar.defaults import *  # noqa
-from oscar import get_core_apps
+from oscar import get_core_apps, OSCAR_MAIN_TEMPLATE_DIR
 
 PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 BASE_DIR = PROJECT_ROOT
@@ -87,7 +87,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'compressor.finders.CompressorFinder',
 )
 
@@ -104,10 +104,17 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
+    'oscar.apps.basket.middleware.BasketMiddleware',
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
-
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    'oscar.apps.customer.auth_backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 ROOT_URLCONF = 'wagtaildemo.urls'
@@ -123,8 +130,10 @@ INSTALLED_APPS = [
     # 'django.contrib.sites',  # Wagtail uses its own site management logic
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.flatpages',
 
     'compressor',
+    'widget_tweaks',
     'taggit',
     'modelcluster',
     'rest_framework',
@@ -163,7 +172,9 @@ HAYSTACK_CONNECTIONS = {
 # full generality (double-digit versions, alpha/beta releases)
 from wagtail.wagtailcore import __version__
 if __version__.split('.') > ['1', '0']:
-    INSTALLED_APPS = list(INSTALLED_APPS) + ['wagtail.contrib.wagtailsearchpromotions']
+    INSTALLED_APPS = list(INSTALLED_APPS) + [
+        'wagtail.contrib.wagtailsearchpromotions'
+    ]
 
 
 EMAIL_SUBJECT_PREFIX = '[wagtaildemo] '
@@ -174,6 +185,10 @@ INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            OSCAR_MAIN_TEMPLATE_DIR
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -183,6 +198,12 @@ TEMPLATES = [
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
+
+                'oscar.apps.search.context_processors.search_form',
+                'oscar.apps.promotions.context_processors.promotions',
+                'oscar.apps.checkout.context_processors.checkout',
+                'oscar.apps.customer.notifications.context_processors.notifications',
+                'oscar.core.context_processors.metadata',
             ],
         },
     },
@@ -225,4 +246,4 @@ LOGGING = {
 
 # WAGTAIL SETTINGS
 
-WAGTAIL_SITE_NAME = 'wagtaildemo'
+WAGTAIL_SITE_NAME = 'oscar-wagtail-demo'

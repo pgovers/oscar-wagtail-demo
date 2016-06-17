@@ -79,6 +79,9 @@ class Category(Page):
         """
         return slugify(self.name)
 
+    def get_ancestors_and_self(self):
+        return list(self.get_ancestors()) + [self]
+
     def get_categories(self):
         """
         Return a list of the current category and its ancestors

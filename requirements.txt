@@ -8,6 +8,7 @@ django-taggit>=0.14.0
 django-libsass>=0.2
 libsass==0.8.2
 Pillow==2.8.1
+pycountry>=1.18
 
 # Dependencies for hosting
 django-redis==3.8.2

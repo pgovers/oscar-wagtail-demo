@@ -27,6 +27,22 @@ class Category(Page):
         ImageChooserPanel('image')
     ]
 
+    @classmethod
+    def get_root_nodes(cls):
+        """
+        :returns: A queryset containing the root nodes in the tree. This
+        differs from the default implementation to find category page root
+        nodes by `content_type`.
+        """
+        content_type = ContentType.objects.get_for_model(cls)
+        depth = (cls.objects.filter(content_type=content_type).aggregate(
+            depth=models.Min('depth')))['depth']
+
+        if depth is not None:
+            return cls.objects.filter(content_type=content_type, depth=depth)
+
+        return cls.objects.filter(content_type=content_type)
+
     def generate_slug(self):
         """
         Generates a slug for a category. This makes no attempt at generating

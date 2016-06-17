@@ -27,7 +27,7 @@
             <div class="col-sm-9"><p>{{ category.description|safe }}</p></div>
             {% if category.image %}
                 {% image category.image width-1000 as categoryimage %}
-                <div class="col-sm-3"><img src="{{ categoryimage.url }}" alt="{{ category.name }}" class="img-responsive" /></div>
+                <img src="{{ categoryimage.url }}" alt="{{ category.name }}" class="img-responsive" />
             {% endif %}
         </div>
     {% endif %}

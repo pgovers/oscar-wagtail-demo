@@ -1,0 +1,35 @@
+{% extends "catalogue/browse.html" %}
+{% load wagtailimages_tags wagtailembeds_tags %}
+{% load i18n %}
+
+{% block title %}
+    {{ category.name }} | {{ block.super }}
+{% endblock %}
+
+{% block description %}
+    {{ category.description|default:""|striptags }}
+{% endblock %}
+
+{% block headertext %}{{ category.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{{ category.name }}</li>
+    </ul>
+{% endblock breadcrumbs %}
+
+{% block content %}
+    {% if category.description %}
+        <div class="row">
+            <div class="col-sm-9"><p>{{ category.description|safe }}</p></div>
+            {% if category.image %}
+                {% image category.image width-1000 as categoryimage %}
+                <img src="{{ categoryimage.url }}" alt="{{ category.name }}" class="img-responsive" />
+            {% endif %}
+        </div>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}

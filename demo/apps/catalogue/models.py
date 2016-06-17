@@ -26,6 +26,7 @@ class Category(Page):
     The Oscars Category as a Wagtail Page
     This works because they both use Treebeard
     """
+    template = "catalogue/categorypage.html"
     name = models.CharField(_('Name'), max_length=255, db_index=True)
     description = models.TextField(_('Description'), blank=True)
     image = models.ForeignKey(
@@ -48,6 +49,15 @@ class Category(Page):
         ImageChooserPanel('image'),
         StreamFieldPanel('body'),
     ]
+
+    @classmethod
+    def add_root(cls, **kwargs):
+        """
+        Adds a Catalogue page node to Wagtail's tree root node. Note that this
+        isn't at depth=1 as that's Wagtail's root.
+        """
+        node = Category.objects.filter(depth=1).first()
+        return node.add_child(**kwargs)
 
     @classmethod
     def get_root_nodes(cls):

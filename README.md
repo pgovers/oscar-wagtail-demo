@@ -38,11 +38,11 @@ Don't want to set up a whole VM to try out Wagtail? No problem.
 
 With PostgreSQL running (and configured to allow you to connect as the 'postgres' user - if not, you'll need to adjust the `createdb` line and the database settings in wagtaildemo/settings/base.py accordingly), run the following commands:
 
-    git clone https://github.com/torchbox/wagtaildemo.git
+    git clone https://github.com/pgovers/oscar-wagtail-demo.git
     cd wagtaildemo
     virtualenv .
     source bin/activate
-    createdb -Upostgres wagtaildemo
+    createdb -Upostgres oscarwagtaildemo
     make develop
 
 The `make develop` command combines:

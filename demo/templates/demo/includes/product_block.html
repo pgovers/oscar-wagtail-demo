@@ -1,0 +1,17 @@
+{% load product_tags %}
+
+<hr>
+
+<h2>{{ block.value.title }}</h2>
+
+<section>
+    <div>
+        <ol class="row">
+            {% for block in blocks.value.products %}
+            <li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+                {% render_product block %}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>

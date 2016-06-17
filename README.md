@@ -53,7 +53,7 @@ The `make develop` command combines:
 * `make superuser` create superuser (you'll be prompted for username, e-mail address and password)
 * `./manage.py runserver` (optionally add port to overrule default port `8000`) 
 
-The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) . Log into the admin with the credentials insert earlier.
+The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) . Log into either one of them with the credentials insert in earlier step.
 
 ### SQLite support
 

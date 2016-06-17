@@ -160,8 +160,6 @@ INSTALLED_APPS = [
     'demo.apps.partner',
 ])
 
-OSCAR_IMAGE_FOLDER = os.path.join(BASE_DIR, 'demo', 'static', 'demo', 'images')
-
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',

@@ -31,5 +31,8 @@
             {% endif %}
         </div>
     {% endif %}
+    {% for block in category.body %}
+        {{ block }}
+    {% endfor %}
     {{ block.super }}
 {% endblock %}

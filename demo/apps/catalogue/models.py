@@ -1,19 +1,16 @@
 from django.db import models
-from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext_lazy as _
 
-from oscar.core.utils import slugify
-from wagtail.wagtailadmin.edit_handlers import FieldPanel
-from wagtail.wagtailcore.models import Page
+from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
-from django.db.models import get_model
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from django.utils.functional import cached_property
+
+from demo.apps.catalogue.blocks import ProductChooserBlock
 
 
 @cached_property
@@ -40,8 +37,7 @@ class Category(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('page', blocks.PageChooserBlock()),
-        ('product', blocks.ChoiceBlock(model=get_target_property)),
+        ('product', ProductChooserBlock()),
     ])
 
     content_panels = Page.content_panels + [

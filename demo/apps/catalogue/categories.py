@@ -1,6 +1,5 @@
-from oscar.core.loading import get_model
-
-Category = get_model('catalogue', 'category')
+from wagtail.wagtailcore.models import Page
+from demo.apps.catalogue.models import Category
 
 
 def create_from_sequence(bits):
@@ -11,10 +10,10 @@ def create_from_sequence(bits):
         # Get or create root node
         name = bits[0]
         try:
-            # Category names should be unique at the depth=1
-            root = Category.objects.get(depth=1, name=name)
+            # Category names should be unique at the depth=2
+            root = Category.get_root_nodes().get(title=name)
         except Category.DoesNotExist:
-            root = Category.add_root(name=name)
+            root = Category.add_root(title=name)
         except Category.MultipleObjectsReturned:
             raise ValueError((
                 "There are more than one categories with name "
@@ -23,14 +22,16 @@ def create_from_sequence(bits):
     else:
         parents = create_from_sequence(bits[:-1])
         parent, name = parents[-1], bits[-1]
+
         try:
-            child = parent.get_children().get(name=name)
-        except Category.DoesNotExist:
-            child = parent.add_child(name=name)
+            child = parent.get_children().get(title=name)
+        except (Page.DoesNotExist, Category.DoesNotExist):
+            child = parent.add_child(title=name)
         except Category.MultipleObjectsReturned:
             raise ValueError((
                 "There are more than one categories with name "
                 "%s which are children of %s") % (name, parent))
+
         parents.append(child)
         return parents
 

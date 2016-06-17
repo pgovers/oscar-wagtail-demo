@@ -1,6 +1,14 @@
 {% extends "catalogue/browse.html" %}
 {% load i18n wagtailimages_tags wagtailembeds_tags demo_tags %}
 
+{% block styles %}
+    {{ block.super }}
+    <style>
+        #top_page { z-index: 1; }
+    </style>
+{% endblock %}
+
+
 {% block title %}
     {{ category.name }} | {{ block.super }}
 {% endblock %}

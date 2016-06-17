@@ -7,6 +7,19 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from django.db.models import get_model
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
+from wagtail.wagtailimages.blocks import ImageChooserBlock
+from django.utils.functional import cached_property
+
+
+@cached_property
+def get_target_property():
+    return get_model('catalogue', 'Product')
+
 
 class Category(Page):
     """
@@ -22,10 +35,18 @@ class Category(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    body = StreamField([
+        ('heading', blocks.CharBlock(classname="full title")),
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('page', blocks.PageChooserBlock()),
+        ('product', blocks.ChoiceBlock(model=get_target_property)),
+    ])
 
     content_panels = Page.content_panels + [
         FieldPanel('description', classname='full'),
-        ImageChooserPanel('image')
+        ImageChooserPanel('image'),
+        StreamFieldPanel('body'),
     ]
 
     @classmethod

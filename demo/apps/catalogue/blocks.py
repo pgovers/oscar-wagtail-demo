@@ -23,7 +23,7 @@ class ProductChooserBlock(blocks.ChooserBlock):
             return value
 
 
-class RecommendedProductBlock(blocks.StructBlock):
+class ProductBlock(blocks.StructBlock):
     title = blocks.CharBlock()
     subtitle = blocks.CharBlock()
     products = blocks.ListBlock(ProductChooserBlock)

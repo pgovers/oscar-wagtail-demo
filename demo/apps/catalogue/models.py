@@ -11,7 +11,7 @@ from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from django.utils.functional import cached_property
 
-from demo.apps.catalogue.blocks import RecommendedProductBlock
+from demo.apps.catalogue.blocks import ProductBlock
 
 
 @cached_property
@@ -38,7 +38,7 @@ class Category(Page):
         ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
-        ('recommended_products', RecommendedProductBlock()),
+        ('product_block', ProductBlock()),
     ])
 
     content_panels = Page.content_panels + [

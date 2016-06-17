@@ -19,7 +19,9 @@
 
 {% block content %}
 
+    {% if category.description %}
     <div class="jumbotron"><p class="lead">{{ category.description|default:""|striptags }}</p></div>
+    {% endif %}
 
     {% if category.image %}
         {% image category.image fill-800x450 as categoryimage %}

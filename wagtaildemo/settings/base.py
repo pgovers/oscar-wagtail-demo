@@ -1,6 +1,8 @@
 # Django settings for oscar-wagtail-demo project
 
 import os
+
+from django.utils.translation import ugettext_lazy as _
 from oscar.defaults import *  # noqa
 from oscar import get_core_apps, OSCAR_MAIN_TEMPLATE_DIR
 
@@ -247,3 +249,15 @@ LOGGING = {
 # WAGTAIL SETTINGS
 
 WAGTAIL_SITE_NAME = 'oscar-wagtail-demo'
+
+
+# OSCAR SETTINGS
+
+OSCAR_DASHBOARD_NAVIGATION = [
+    {
+        'label': _('Wagtail CMS'),
+        'icon': 'icon-book',
+        'url_name': 'wagtailadmin_home',
+        'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff
+    },
+] + OSCAR_DASHBOARD_NAVIGATION

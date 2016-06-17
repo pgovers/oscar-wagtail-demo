@@ -71,7 +71,7 @@ for additional settings:
     http://django-oscar.readthedocs.io/en/latest/internals/getting_started.html
 
 
-# Oscar categories in Wagtail
+# Oscar Categories in Wagtail
 
 The Oscar Category and Wagtail Page look alike. We fork of the Oscar catalogue app into our project with:
 
@@ -80,24 +80,37 @@ The Oscar Category and Wagtail Page look alike. We fork of the Oscar catalogue a
 
 Now we create the Category Page model. In `demo/apps/catalogue/models.py` add:
 
-    from django.db import models
-    from django.utils.translation import ugettext_lazy as _
+     ...
 
-    from wagtail.wagtailcore.models import Page
-
-
-    class Category(Page):
+     class Category(Page):
         """
-        The Oscars Category as a Wagtail Page.
+        The Oscars Category as a Wagtail Page
         This works because they both use Treebeard
         """
-        name = models.CharField(
-            verbose_name=_('name'),
-            max_length=255,
-            help_text=_("Category name")
+        template = "catalogue/categorypage.html"
+        name = models.CharField(_('Name'), max_length=255, db_index=True)
+        description = models.TextField(_('Description'), blank=True)
+        image = models.ForeignKey(
+            'wagtailimages.Image',
+            null=True,
+            blank=True,
+            on_delete=models.SET_NULL,
+            related_name='+'
         )
+        body = StreamField([
+            ('heading', blocks.CharBlock(classname="full title")),
+            ('paragraph', blocks.RichTextBlock()),
+            ('image', ImageChooserBlock()),
+            ('product_block', ProductBlock()),
+        ])
 
-    from oscar.apps.catalogue.models import *  # noqa
+        content_panels = Page.content_panels + [
+            FieldPanel('description', classname='full'),
+            ImageChooserPanel('image'),
+            StreamFieldPanel('body'),
+        ]
+
+     ...
 
 
 Run `makemigrations` and `migrate` to let your database reflect the changes:
@@ -106,7 +119,47 @@ Run `makemigrations` and `migrate` to let your database reflect the changes:
     $ python manage.py migrate
 
 
-# Admin routes
+# Supply additional Oscar Category methods
+
+
+The Oscar machinery needs some extra methods on the new Category class for the navigation to work.
+
+Most methods are copied from the original Oscar Category class. We hightlight the once we needed to customize a
+little more.
+
+
+When Oscar requests the products for the search feature it calls `get_contect`. Here we add `category`
+and search context to the context object. This allowes the Oscar search handler to get all Products on
+the CategoryPage:
+
+
+    def get_context(self, request, *args, **kwargs):
+        self.search_handler = self.get_search_handler(
+            request.GET, request.get_full_path(), self.get_categories())
+        context = super(Category, self).get_context(request, *args, **kwargs)
+        context['category'] = self
+        search_context = self.search_handler.get_search_context_data('products')
+        context.update(search_context)
+        return context
+
+
+Oscar has a field called `name` where Wagtail has `title`. In the save method we make sure both values
+exist and are equal. This ensures that both Oscar and Wagtail work without further patching name/title related code.
+
+
+    def save(self, *args, **kwargs):
+        ...
+
+        # Set title and name
+        if self.name and not self.title:
+            self.title = self.name
+        else:
+            self.name = self.title
+
+        ...
+
+
+# Oscar routes
 
 Add routes in `urls.py`:
 
@@ -117,9 +170,6 @@ Add routes in `urls.py`:
         url(r'', include(application.urls)),
         ...
     ]
-
-
-# Disable editing categories in Oscar admin
 
 
 # ProductBlock StreamField

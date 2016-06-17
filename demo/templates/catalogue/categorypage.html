@@ -6,10 +6,6 @@
     {{ category.name }} | {{ block.super }}
 {% endblock %}
 
-{% block description %}
-    {{ category.description|default:""|striptags }}
-{% endblock %}
-
 {% block headertext %}{{ category.name }}{% endblock %}
 
 {% block breadcrumbs %}
@@ -22,17 +18,36 @@
 {% endblock breadcrumbs %}
 
 {% block content %}
-    {% if category.description %}
-        <div class="row">
-            <div class="col-sm-9"><p>{{ category.description|safe }}</p></div>
-            {% if category.image %}
-                {% image category.image width-1000 as categoryimage %}
-                <img src="{{ categoryimage.url }}" alt="{{ category.name }}" class="img-responsive" />
-            {% endif %}
-        </div>
+
+    {{ category.description|default:""|striptags }}
+
+    {% if category.image %}
+        {% image category.image fill-800x450 as categoryimage %}
+        <img src="{{ categoryimage.url }}" alt="{{ category.name }}" class="img-responsive" />
     {% endif %}
+
     {% for block in category.body %}
-        {{ block }}
+
+        {% if block.block_type == 'heading' %}
+            <h2>{{ block }}</h2>
+        {% endif %}
+
+        {% if block.block_type == 'paragraph' %}
+            <div class="jumbotron"><p class="lead">{{ block }}</p></div>
+        {% endif %}
+
+        {% if block.block_type == 'image' %}
+            {% image block.value fill-800x450 %}
+        {% endif %}
+
+        {% if block.block_type == 'product_block' %}
+            {% include 'demo/includes/product_block.html' with blocks=block %}
+        {% endif %}
+
     {% endfor %}
+
+    <hr>
+
+    <h2>All {{ self.title }}</h2>
     {{ block.super }}
 {% endblock %}

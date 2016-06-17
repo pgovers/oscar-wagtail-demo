@@ -13,6 +13,7 @@ class Category(Page):
     The Oscars Category as a Wagtail Page
     This works because they both use Treebeard
     """
+    template = "catalogue/categorypage.html"
     name = models.CharField(_('Name'), max_length=255, db_index=True)
     description = models.TextField(_('Description'), blank=True)
     image = models.ForeignKey(

@@ -51,6 +51,25 @@ class Category(Page):
         """
         return slugify(self.name)
 
+    def get_categories(self):
+        """
+        Return a list of the current category and its ancestors
+        """
+        return list(self.get_descendants()) + [self]
+
+    def get_search_handler(self, *args, **kwargs):
+        from oscar.apps.catalogue.search_handlers import get_product_search_handler_class
+        return get_product_search_handler_class()(*args, **kwargs)
+
+    def get_context(self, request, *args, **kwargs):
+        self.search_handler = self.get_search_handler(
+            request.GET, request.get_full_path(), self.get_categories())
+        context = super(Category, self).get_context(request, *args, **kwargs)
+        context['category'] = self
+        search_context = self.search_handler.get_search_context_data('products')
+        context.update(search_context)
+        return context
+
     def ensure_slug_uniqueness(self):
         """
         Ensures that the category's slug is unique amongst it's siblings.

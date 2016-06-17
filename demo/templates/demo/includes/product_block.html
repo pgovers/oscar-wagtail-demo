@@ -2,7 +2,12 @@
 
 <hr>
 
-<h2>{{ block.value.title }}</h2>
+<h2>
+    {{ block.value.title }}
+    {% if block.value.subtitle %}
+        <br><small>{{ block.value.subtitle }}</small>
+    {% endif %}
+</h2>
 
 <section>
     <div>

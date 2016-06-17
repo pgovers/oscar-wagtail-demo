@@ -22,11 +22,11 @@ fixtures:
 	./manage.py clear_index --noinput
 	./manage.py update_index
 
-createsuperuser:
+superuser:
 	./manage.py createsuperuser
 
 clean:
 	# Delete compiled Python files
 	find . -type f -name "*.pyc" -delete
 
-develop: clean install migrations fixtures createsuperuser
+develop: clean install migrations fixtures superuser

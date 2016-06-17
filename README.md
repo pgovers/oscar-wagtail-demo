@@ -41,7 +41,7 @@ Add Oscar to your settings, in base.py import Oscar:
 
 
 Oscar needs to have the Django sites framework enabled. Add `django.contrib.sites`to `INSTALLED_APPS` and add a
-`SITE_ID`. Oscar core aps are with `get_core_apps()`:
+`SITE_ID`. Oscar core apps are with `get_core_apps()`:
 
     INSTALLED_APPS = [
         ...

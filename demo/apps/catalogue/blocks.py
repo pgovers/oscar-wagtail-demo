@@ -21,3 +21,9 @@ class ProductChooserBlock(blocks.ChooserBlock):
             return value.pk
         else:
             return value
+
+
+class RecommendedProductBlock(blocks.StructBlock):
+    title = blocks.CharBlock()
+    subtitle = blocks.CharBlock()
+    products = blocks.ListBlock(ProductChooserBlock)

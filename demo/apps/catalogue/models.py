@@ -29,6 +29,15 @@ class Category(Page):
     ]
 
     @classmethod
+    def add_root(cls, **kwargs):
+        """
+        Adds a Catalogue page node to Wagtail's tree root node. Note that this
+        isn't at depth=1 as that's Wagtail's root.
+        """
+        node = Category.objects.filter(depth=1).first()
+        return node.add_child(**kwargs)
+
+    @classmethod
     def get_root_nodes(cls):
         """
         :returns: A queryset containing the root nodes in the tree. This

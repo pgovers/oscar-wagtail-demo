@@ -57,6 +57,13 @@ class Category(Page):
         """
         return list(self.get_descendants()) + [self]
 
+    @classmethod
+    def get_tree(self, parent = None):
+        return self.objects.all()
+
+    def get_absolute_url(self):
+        return self.url
+
     def get_search_handler(self, *args, **kwargs):
         from oscar.apps.catalogue.search_handlers import get_product_search_handler_class
         return get_product_search_handler_class()(*args, **kwargs)

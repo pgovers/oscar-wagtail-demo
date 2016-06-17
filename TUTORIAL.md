@@ -122,7 +122,45 @@ Add routes in `urls.py`:
 # Disable editing categories in Oscar admin
 
 
-# Product block stream field
+# ProductBlock StreamField
+
+Oscar uses dynamic class loading. Dynamic class loading makes Oscar extensively customisable. We want to reference
+an Oscar Product class from Wagtail. But it is not available when the vanilla Django model loader initializes the
+Wagtail models.
+
+To get a reference to the Oscar Product class from Wagtail we need to use a StreamField and a custom ChooserBlock.
+
+Here the ProductChooserBlock loads Products with `get_model('catalogue', 'product')` on runtime.
+
+
+    # oscar-wagtail-demo/demo/apps/catalogue/blocks.py
+
+    from django.utils.functional import cached_property
+    from oscar.core.loading import get_model
+    ...
+
+
+    class ProductChooserBlock(blocks.ChooserBlock):
+        @cached_property
+        def target_model(self):
+            return get_model('catalogue', 'product')
+
+        widget = forms.Select
+
+        class Meta:
+            app_label = 'catalogue'
+
+        def value_for_form(self, value):
+            # return the key value for the select field
+            if isinstance(value, self.target_model):
+                return value.pk
+            else:
+                return value
+
+
+    class ProductBlock(blocks.StructBlock):
+        ...
+        products = blocks.ListBlock(ProductChooserBlock)
 
 
 # Category block stream field

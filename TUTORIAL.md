@@ -1,6 +1,6 @@
 # Oscar Wagtail Demo
 
-**A Django recipe for integration Wagtail into an Oscar application.**
+**A Django recipe for integrating Wagtail into an Oscar application.**
 
 This demo shows you how to run an Oscar e-commerce application in parallel with Wagtail. Both admin interfaces are
 used. We keep the Oscar admin as is to manage your products. We bring in products and categories into Wagtail

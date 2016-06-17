@@ -2,8 +2,7 @@
 .PHONY: install migrations fixtures createsuperuser clean develop
 
 install:
-	cd wagtaildemo
-	pip install -e . -r requirements.txt
+	pip install -r requirements.txt
 
 migrations:
 	# Migrate database
@@ -21,7 +20,7 @@ fixtures:
 	./manage.py loaddata demo/fixtures/orders.json
 	# Update Oscar index
 	./manage.py clear_index --noinput
-	./manage.py update_index catalogue
+	./manage.py update_index
 
 createsuperuser:
 	./manage.py createsuperuser

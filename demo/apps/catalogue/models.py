@@ -1,8 +1,9 @@
 from django.db import models
-
+from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from oscar.core.utils import slugify
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore import blocks

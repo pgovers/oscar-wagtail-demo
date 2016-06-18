@@ -1,16 +1,16 @@
 # Oscar Wagtail Tutorial
 
-**A Django recipe for integrating Wagtail into an Oscar application.**
+**Oscar e-commerce application in parallel with Wagtail CMS.**
 
-This demo shows you how to run an Oscar e-commerce application in parallel with Wagtail. Both admin interfaces are
-used. We keep the Oscar admin as is to manage your products. We bring products and categories into Wagtail
-to be able to create some editorial content.
+This tutorial shows you how to run an Oscar e-commerce application in parallel with Wagtail CMS. Both admin interfaces
+are used. We keep the Oscar admin unchanged. We bring products and categories into Wagtail to be able to create
+editorial content.
 
 This demo shows you:
 
   - How to add Oscar to an existing Wagtail site
   - CRUD Oscar Categories in Wagtail
-  - Product block stream field
+  - Select a Product in a Wagtail stream field.
 
 
 # Prerequisites
@@ -67,6 +67,19 @@ Note: We ignore all other Oscar settings/features to keep this demo simple. Cons
 for additional settings:
 
     http://django-oscar.readthedocs.io/en/latest/internals/getting_started.html
+
+
+# Oscar routes
+
+Add routes in `urls.py`:
+
+    from oscar.app import application
+
+    urlpatterns = [
+        url(r'^i18n/', include('django.conf.urls.i18n')),
+        url(r'', include(application.urls)),
+        ...
+    ]
 
 
 # Oscar Categories in Wagtail
@@ -157,19 +170,6 @@ exist and are equal. This ensures that both Oscar and Wagtail work without furth
         ...
 
 
-# Oscar routes
-
-Add routes in `urls.py`:
-
-    from oscar.app import application
-
-    urlpatterns = [
-        url(r'^i18n/', include('django.conf.urls.i18n')),
-        url(r'', include(application.urls)),
-        ...
-    ]
-
-
 # ProductBlock StreamField
 
 Oscar uses dynamic class loading. Dynamic class loading makes Oscar extensively customisable. We want to reference
@@ -209,10 +209,4 @@ Here the ProductChooserBlock loads Products with `get_model('catalogue', 'produc
     class ProductBlock(blocks.StructBlock):
         ...
         products = blocks.ListBlock(ProductChooserBlock)
-
-
-# Category block stream field
-
-
-# Category landing page
 

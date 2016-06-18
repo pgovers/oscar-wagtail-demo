@@ -1,18 +1,16 @@
-# Oscar Wagtail Demo
+# Oscar Wagtail Tutorial
 
 **A Django recipe for integrating Wagtail into an Oscar application.**
 
 This demo shows you how to run an Oscar e-commerce application in parallel with Wagtail. Both admin interfaces are
-used. We keep the Oscar admin as is to manage your products. We bring in products and categories into Wagtail
+used. We keep the Oscar admin as is to manage your products. We bring products and categories into Wagtail
 to be able to create some editorial content.
 
 This demo shows you:
 
   - How to add Oscar to an existing Wagtail site
   - CRUD Oscar Categories in Wagtail
-  - Disable editing Categories in Oscar
   - Product block stream field
-  - Category block stream field
 
 
 # Prerequisites
@@ -124,12 +122,12 @@ Run `makemigrations` and `migrate` to let your database reflect the changes:
 
 The Oscar machinery needs some extra methods on the new Category class for the navigation to work.
 
-Most methods are copied from the original Oscar Category class. We hightlight the once we needed to customize a
+Most methods are copied from the original Oscar Category class. Here we show you the methods we need to customize a
 little more.
 
 
-When Oscar requests the products for the search feature it calls `get_contect`. Here we add `category`
-and search context to the context object. This allowes the Oscar search handler to get all Products on
+When Oscar requests the products for the search feature it calls `get_context`. Here we add `category`
+and search context to the context object. This allows the Oscar search handler to get all Products on
 the CategoryPage:
 
 
@@ -180,7 +178,7 @@ Wagtail models.
 
 To get a reference to the Oscar Product class from Wagtail we need to use a StreamField and a custom ChooserBlock.
 
-Here the ProductChooserBlock loads Products with `get_model('catalogue', 'product')` on runtime.
+Here the ProductChooserBlock loads Products with `get_model('catalogue', 'product')` on runtime:
 
 
     # oscar-wagtail-demo/demo/apps/catalogue/blocks.py

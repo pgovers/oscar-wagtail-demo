@@ -1,8 +1,8 @@
 #!/bin/bash
 
-PROJECT_NAME="wagtaildemo"
+PROJECT_NAME="oscarwagtaildemo"
 
-PROJECT_DIR=/home/vagrant/wagtaildemo
+PROJECT_DIR=/home/vagrant/oscar-wagtail-demo
 VIRTUALENV_DIR=/home/vagrant/.virtualenvs/$PROJECT_NAME
 
 PYTHON=$VIRTUALENV_DIR/bin/python
@@ -29,9 +29,21 @@ su - vagrant -c "$PIP install -r $PROJECT_DIR/requirements.txt -f /home/vagrant/
 chmod a+x $PROJECT_DIR/manage.py
 
 
-# Run migrate/update_index/load_initial_data
-su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py migrate --noinput && \
-                 $PYTHON $PROJECT_DIR/manage.py load_initial_data && \
+# Run database migrations
+su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py migrate --noinput"
+
+# Load initial Wagtail data
+su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py load_initial_data"
+
+# Import Oscar fixtures
+su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/catalogue/child_products.json && \
+                 $PYTHON $PROJECT_DIR/manage.py oscar_import_catalogue demo/fixtures/catalogue/*.csv && \
+                 $PYTHON $PROJECT_DIR/manage.py oscar_import_catalogue_images demo/fixtures/catalogue/images.tar.gz && \
+                 $PYTHON $PROJECT_DIR/manage.py oscar_populate_countries && \
+                 $PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/pages.json demo/fixtures/auth.json demo/fixtures/ranges.json demo/fixtures/offers.json \
+                 $PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/orders.json"
+
+su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py clear_index --noinput && \
                  $PYTHON $PROJECT_DIR/manage.py update_index"
 
 

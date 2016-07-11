@@ -1,4 +1,5 @@
-import os, shutil
+import os
+import shutil
 
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
@@ -6,6 +7,9 @@ from django.core.management import call_command
 
 
 class Command(NoArgsCommand):
+    """
+    Import Wagtail fixtures
+    """
     def handle_noargs(self, **options):
         fixtures_dir = os.path.join(settings.PROJECT_ROOT, 'demo', 'fixtures')
         fixture_file = os.path.join(fixtures_dir, 'demo.json')

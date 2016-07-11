@@ -31,7 +31,7 @@ Setup without Vagrant
 Don't want to set up a whole VM to try out Wagtail? No problem.
 
 ### Dependencies
-* [PostgreSQL](http://www.postgresql.org)
+* [PostgreSQL](https://www.postgresql.org) or [SQLite](https://www.sqlite.org/)
 * [PIP](https://github.com/pypa/pip)
 
 ### Installation
@@ -53,7 +53,7 @@ The `make develop` command combines:
 * `make fixtures` load both Wagtail and Oscar fixtures and perform `update_index`
 * `make superuser` create superuser (you'll be prompted for username, e-mail address and password)
 
-The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) . Log into either one of them with the credentials insert in earlier step.
+The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/). Log into them with the credentials inserted in earlier step.
 
 ### SQLite support
 

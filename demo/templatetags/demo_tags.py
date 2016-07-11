@@ -59,7 +59,7 @@ def top_menu_children(context, parent):
 
 
 # Retrieves all live pages which are children of the calling page
-#for standard index listing
+# for standard index listing
 @register.inclusion_tag(
     'demo/tags/standard_index_listing.html',
     takes_context=True

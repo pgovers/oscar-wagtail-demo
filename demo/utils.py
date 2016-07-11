@@ -53,7 +53,9 @@ def export_event(event, format='ical'):
 
         # Make a uid
         event_string = event.url + str(start_datetime)
-        uid = hashlib.sha1(event_string.encode('utf-8')).hexdigest() + '@wagtaildemo'
+        uid = '{}@wagtaildemo'.format(
+            hashlib.sha1(event_string.encode('utf-8')).hexdigest()
+        )
 
         # Make event
         ical_components.extend([
@@ -64,8 +66,12 @@ def export_event(event, format='ical'):
             'SUMMARY:' + add_slashes(event.title),
             'DESCRIPTION:' + add_slashes(event.search_description),
             'LOCATION:' + add_slashes(event.location),
-            'DTSTART;TZID=Europe/London:' + start_datetime.strftime('%Y%m%dT%H%M%S'),
-            'DTEND;TZID=Europe/London:' + end_datetime.strftime('%Y%m%dT%H%M%S'),
+            'DTSTART;TZID=Europe/London:{}'.format(
+                start_datetime.strftime('%Y%m%dT%H%M%S')
+            ),
+            'DTEND;TZID=Europe/London:{}'.format(
+                end_datetime.strftime('%Y%m%dT%H%M%S')
+            ),
             'END:VEVENT',
         ])
 
@@ -76,4 +82,3 @@ def export_event(event, format='ical'):
 
     # Join components
     return '\r'.join(ical_components)
-

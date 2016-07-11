@@ -1,15 +1,16 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as _
 
 from oscar.core.utils import slugify
+from oscar.core.loading import get_model
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
-from django.utils.functional import cached_property
 
 from demo.apps.catalogue.blocks import ProductBlock
 
@@ -89,14 +90,17 @@ class Category(Page):
         return list(self.get_descendants()) + [self]
 
     @classmethod
-    def get_tree(self, parent = None):
-        return self.objects.all()
+    def get_tree(cls, parent=None):
+        return cls.objects.all()
 
     def get_absolute_url(self):
         return self.url
 
-    def get_search_handler(self, *args, **kwargs):
-        from oscar.apps.catalogue.search_handlers import get_product_search_handler_class
+    @staticmethod
+    def get_search_handler(*args, **kwargs):
+        from oscar.apps.catalogue.search_handlers import (
+            get_product_search_handler_class
+        )
         return get_product_search_handler_class()(*args, **kwargs)
 
     def get_context(self, request, *args, **kwargs):
@@ -104,7 +108,9 @@ class Category(Page):
             request.GET, request.get_full_path(), self.get_categories())
         context = super(Category, self).get_context(request, *args, **kwargs)
         context['category'] = self
-        search_context = self.search_handler.get_search_context_data('products')
+        search_context = self.search_handler.get_search_context_data(
+            'products'
+        )
         context.update(search_context)
         return context
 

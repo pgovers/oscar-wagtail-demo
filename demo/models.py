@@ -7,15 +7,20 @@ from django import forms
 
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailcore.fields import RichTextField, StreamField
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, \
-    InlinePanel, PageChooserPanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import (
+    FieldPanel, MultiFieldPanel, InlinePanel, PageChooserPanel,
+    StreamFieldPanel
+)
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 from wagtail.wagtailsnippets.models import register_snippet
 from wagtail.wagtailforms.models import AbstractEmailForm, AbstractFormField
 from wagtail.wagtailsearch import index
 
-from wagtail.wagtailcore.blocks import TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock, RawHTMLBlock
+from wagtail.wagtailcore.blocks import (
+    TextBlock, StructBlock, StreamBlock, FieldBlock, CharBlock, RichTextBlock,
+    RawHTMLBlock
+)
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtaildocs.blocks import DocumentChooserBlock
 
@@ -31,8 +36,8 @@ EVENT_AUDIENCE_CHOICES = (
     ('private', "Private"),
 )
 
-# Global Streamfield definition
 
+# Global Streamfield definition
 
 class PullQuoteBlock(StructBlock):
     quote = TextBlock("quote title")
@@ -43,9 +48,14 @@ class PullQuoteBlock(StructBlock):
 
 
 class ImageFormatChoiceBlock(FieldBlock):
-    field = forms.ChoiceField(choices=(
-        ('left', 'Wrap left'), ('right', 'Wrap right'), ('mid', 'Mid width'), ('full', 'Full width'),
-    ))
+    field = forms.ChoiceField(
+        choices=(
+            ('left', 'Wrap left'),
+            ('right', 'Wrap right'),
+            ('mid', 'Mid width'),
+            ('full', 'Full width'),
+        )
+    )
 
 
 class HTMLAlignmentChoiceBlock(FieldBlock):
@@ -598,11 +608,17 @@ class EventPage(Page):
                     export_event(self, 'ical'),
                     content_type='text/calendar',
                 )
-                response['Content-Disposition'] = 'attachment; filename=' + self.slug + '.ics'
+                response['Content-Disposition'] = (
+                    'attachment; filename={}.ics'.format(self.slug)
+                )
                 return response
             else:
                 # Unrecognised format error
-                message = 'Could not export event\n\nUnrecognised format: ' + request.GET['format']
+                message = (
+                    'Could not export event\n\nUnrecognised format: {}'.format(
+                        request.GET['format']
+                    )
+                )
                 return HttpResponse(message, content_type='text/plain')
         else:
             # Display event page as usual

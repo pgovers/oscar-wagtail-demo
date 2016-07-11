@@ -1,11 +1,12 @@
-from .base import *
+from .base import *  # noqa
 
 DEBUG = False
 
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
+        'BACKEND':
+            'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
         'INDEX': 'wagtaildemo'
     }
 }
@@ -32,6 +33,6 @@ TEMPLATE_LOADERS = (
 
 
 try:
-	from .local import *
+    from .local import *  # noqa
 except ImportError:
-	pass
+    pass

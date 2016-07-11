@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # noqa
 
 DEBUG = True
 
@@ -8,6 +8,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 BASE_URL = 'http://localhost:8000'
 
 try:
-    from .local import *
+    from .local import *  # noqa
 except ImportError:
     pass

@@ -172,7 +172,7 @@ HAYSTACK_CONNECTIONS = {
 # if we're on Wagtail 1.1 or later.
 # NB this is a quick-and-dirty version check that won't work with
 # full generality (double-digit versions, alpha/beta releases)
-from wagtail.wagtailcore import __version__
+from wagtail.wagtailcore import __version__  # noqa
 if __version__.split('.') > ['1', '0']:
     INSTALLED_APPS = list(INSTALLED_APPS) + [
         'wagtail.contrib.wagtailsearchpromotions'
@@ -204,7 +204,8 @@ TEMPLATES = [
                 'oscar.apps.search.context_processors.search_form',
                 'oscar.apps.promotions.context_processors.promotions',
                 'oscar.apps.checkout.context_processors.checkout',
-                'oscar.apps.customer.notifications.context_processors.notifications',
+                'oscar.apps.customer.notifications.context_processors.'
+                'notifications',
                 'oscar.core.context_processors.metadata',
             ],
         },
@@ -260,4 +261,4 @@ OSCAR_DASHBOARD_NAVIGATION = [
         'url_name': 'wagtailadmin_home',
         'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff
     },
-] + OSCAR_DASHBOARD_NAVIGATION
+] + OSCAR_DASHBOARD_NAVIGATION  # noqa

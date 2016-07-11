@@ -17,8 +17,8 @@ Setup with Vagrant
 ### Installation
 Run the following commands:
 
-    git clone https://github.com/torchbox/wagtaildemo.git
-    cd wagtaildemo
+    git clone https://github.com/pgovers/oscar-wagtail-demo.git
+    cd oscar-wagtail-demo
     vagrant up
     vagrant ssh
       (then, within the SSH session:)
@@ -39,11 +39,12 @@ Don't want to set up a whole VM to try out Wagtail? No problem.
 With PostgreSQL running (and configured to allow you to connect as the 'postgres' user - if not, you'll need to adjust the `createdb` line and the database settings in wagtaildemo/settings/base.py accordingly), run the following commands:
 
     git clone https://github.com/pgovers/oscar-wagtail-demo.git
-    cd wagtaildemo
+    cd oscar-wagtail-demo
     virtualenv .
     source bin/activate
     createdb -Upostgres oscarwagtaildemo
     make develop
+    ./manage.py runserver
 
 The `make develop` command combines:
 * `make clean` cleaning any compiled Python files
@@ -51,7 +52,6 @@ The `make develop` command combines:
 * `make migrations` performing `./manage migrations` to perform database migrations
 * `make fixtures` load both Wagtail and Oscar fixtures and perform `update_index`
 * `make superuser` create superuser (you'll be prompted for username, e-mail address and password)
-* `./manage.py runserver` (optionally add port to overrule default port `8000`) 
 
 The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/) . Log into either one of them with the credentials insert in earlier step.
 

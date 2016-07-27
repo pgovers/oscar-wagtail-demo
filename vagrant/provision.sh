@@ -36,13 +36,9 @@ su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py migrate --noinput"
 su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py load_initial_data"
 
 # Import Oscar fixtures
-su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/catalogue/child_products.json && \
-                 $PYTHON $PROJECT_DIR/manage.py oscar_import_catalogue demo/fixtures/catalogue/*.csv && \
-                 $PYTHON $PROJECT_DIR/manage.py oscar_import_catalogue_images demo/fixtures/catalogue/images.tar.gz && \
-                 $PYTHON $PROJECT_DIR/manage.py oscar_populate_countries && \
-                 $PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/pages.json demo/fixtures/auth.json demo/fixtures/ranges.json demo/fixtures/offers.json \
-                 $PYTHON $PROJECT_DIR/manage.py loaddata demo/fixtures/orders.json"
+su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py load_oscar_data"
 
+# Update Haystack index
 su - vagrant -c "$PYTHON $PROJECT_DIR/manage.py clear_index --noinput && \
                  $PYTHON $PROJECT_DIR/manage.py update_index"
 

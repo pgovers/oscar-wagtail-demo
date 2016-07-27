@@ -11,14 +11,9 @@ migrations:
 fixtures:
 	# Load initial Wagtail data
 	./manage.py load_initial_data
-	# Import Oscar fixtures
-	./manage.py loaddata demo/fixtures/catalogue/child_products.json
-	./manage.py oscar_import_catalogue demo/fixtures/catalogue/*.csv
-	./manage.py oscar_import_catalogue_images demo/fixtures/catalogue/images.tar.gz
-	./manage.py oscar_populate_countries
-	./manage.py loaddata demo/fixtures/pages.json demo/fixtures/auth.json demo/fixtures/ranges.json demo/fixtures/offers.json
-	./manage.py loaddata demo/fixtures/orders.json
-	# Update Oscar index
+	# Load initial Oscar data
+	./manage.py load_oscar_data
+	# Update Haystack index
 	./manage.py clear_index --noinput
 	./manage.py update_index
 

@@ -12,7 +12,7 @@ Setup with Vagrant
 
 ### Dependencies
 * [VirtualBox](https://www.virtualbox.org/)
-* [Vagrant 1.5+](http://www.vagrantup.com)
+* [Vagrant 1.5+](https://www.vagrantup.com)
 
 ### Installation
 Run the following commands:
@@ -24,7 +24,7 @@ Run the following commands:
       (then, within the SSH session:)
     ./manage.py runserver 0.0.0.0:8000
 
-The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/) and the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) . Log into the admin with the credentials ``admin / changeme``.
+The demo site will now be accessible at [http://localhost:8000/](http://localhost:8000/), the Wagtail admin interface at [http://localhost:8000/admin/](http://localhost:8000/admin/) and the Oscar dashboard interface at [http://localhost:8000/dashboard/](http://localhost:8000/dashboard/). Log into them with the credentials ``admin / changeme``.
 
 Setup without Vagrant
 -----
@@ -57,5 +57,4 @@ The demo site will now be accessible at [http://localhost:8000/](http://localhos
 
 ### SQLite support
 
-SQLite is supported as an alternative to PostgreSQL - update the `DATABASES` setting
-in wagtaildemo/settings/base.py to use `'django.db.backends.sqlite3'` and set `NAME` to be the full path of your database file, as you would with a regular Django project.
+SQLite is supported as an alternative to PostgreSQL - update the `DATABASES` setting in wagtaildemo/settings/base.py to use `'django.db.backends.sqlite3'` and set `NAME` to be the full path of your database file, as you would with a regular Django project.

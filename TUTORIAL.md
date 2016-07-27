@@ -24,7 +24,7 @@ To keep it simple we show you here the minimal steps required to get up and runn
 
 Add Oscar to your `requirements.txt`. We use the latest Oscar 1.2.x
 
-    oscar>=1.2,<1.3
+    django-oscar>=1.2,<1.3
 
 
 Install the requirements

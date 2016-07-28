@@ -8,7 +8,7 @@ This demo shows you:
 
   - How to add Oscar to an existing Wagtail site
   - CRUD Oscar Categories in Wagtail
-  - Select Products in Wagtail's streamfields.
+  - Select Products in Wagtail's streamfields
 
 
 # Prerequisites

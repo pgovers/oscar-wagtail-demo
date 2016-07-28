@@ -61,7 +61,7 @@ SQLite is supported as an alternative to PostgreSQL - update the `DATABASES` set
 
 Contributors
 ------------
-[Peter Govers](https://github.com/pgovers) ([Lukkien](https://www.lukkien.com))
-[Coen van der Kamp](https://github.com/allcaps) ([Four Digits](https://www.fourdigits.nl))
-[Henk-Jan van Hasselaar](https://github.com/Henk-JanVanHasselaar) ([Lukkien](https://www.lukkien.com))
-[Ludolf Takens](https://github.com/ltakens) ([Four Digits](https://www.fourdigits.nl))
+ - [Peter Govers](https://github.com/pgovers) ([Lukkien](https://www.lukkien.com))
+ - [Coen van der Kamp](https://github.com/allcaps) ([Four Digits](https://www.fourdigits.nl))
+ - [Henk-Jan van Hasselaar](https://github.com/Henk-JanVanHasselaar) ([Lukkien](https://www.lukkien.com))
+ - [Ludolf Takens](https://github.com/ltakens) ([Four Digits](https://www.fourdigits.nl))
